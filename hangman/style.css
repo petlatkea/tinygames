@@ -1,0 +1,56 @@
+body {
+  background-color: #444;
+  color: #eee;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+line, circle {
+  stroke: white;
+  stroke-width: 4;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+#game {
+  display: flex;
+  gap: 4em
+}
+
+#word {
+  margin-left: 30px;
+  display: flex;
+  gap: 4px;
+}
+
+#word .letter {
+  font-size: 2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #aaa;
+}
+
+#alphabetbuttons {
+  margin-top: .3em;
+}
+
+#alphabetbuttons button {
+  min-width: 1.4em;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  margin-inline-end: 4px;
+
+  /* needed, because changing the background-color destroys the default border */
+  border: 1px inset grey;
+  border-radius: 4px;
+}
+
+.incorrect {
+  background-color: rgba(244, 107, 107, 0.62);
+  color: #aaa;
+}
+
+.correct {
+  background-color: rgba(140, 244, 140, 0.6);
+  color: #ccc;
+}
