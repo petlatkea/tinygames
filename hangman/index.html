@@ -11,37 +11,37 @@
     <p>Try to guess the secret word before being hanged!</p>
     <hr />
 
-    <svg height="280" width="300">
-      <g id="man">
-        <circle id="head" cx="200" cy="80" r="20" fill="transparent" class="hide"/>
-        <line id="body" x1="200" y1="100" x2="200" y2="150" class="hide"/>
-        <line id="armL" x1="200" y1="120" x2="170" y2="140" class="hide"/>
-        <line id="armR" x1="200" y1="120" x2="230" y2="140" class="hide"/>
-        <line id="legL" x1="200" y1="150" x2="180" y2="190" class="hide"/>
-        <line id="legR" x1="200" y1="150" x2="220" y2="190" class="hide"/>
-      </g>
-      <g id="gallow">
-        <line x1="50" y1="250" x2="150" y2="250" />
-        <line x1="100" y1="250" x2="100" y2="20" />
-        <line x1="100" y1="20" x2="200" y2="20" />
-        <line id="rope" x1="200" y1="20" x2="200" y2="60" />
-      </g>
-    </svg>
-
     <div id="game">
-      <div id="word">
-        <div class="letter">H</div>
-        <div class="letter">a</div>
-        <div class="letter">n</div>
-        <div class="letter">g</div>
-        <div class="letter">e</div>
-        <div class="letter">d</div>
+      <svg height="280" width="300">
+        <g id="man">
+          <circle id="head" cx="200" cy="80" r="20" fill="transparent" class="hide" />
+          <line id="body" x1="200" y1="100" x2="200" y2="150" class="hide" />
+          <line id="armL" x1="200" y1="120" x2="170" y2="140" class="hide" />
+          <line id="armR" x1="200" y1="120" x2="230" y2="140" class="hide" />
+          <line id="legL" x1="200" y1="150" x2="180" y2="190" class="hide" />
+          <line id="legR" x1="200" y1="150" x2="220" y2="190" class="hide" />
+        </g>
+        <g id="gallow">
+          <line x1="50" y1="250" x2="150" y2="250" />
+          <line x1="100" y1="250" x2="100" y2="20" />
+          <line x1="100" y1="20" x2="200" y2="20" />
+          <line id="rope" x1="200" y1="20" x2="200" y2="60" />
+        </g>
+      </svg>
+      <div id="status">
+        <div id="won" class="hide">
+          <h1>You won - guessed the word with only <span id="wrong">X</span> wrong letters!</h1>
+          <button class="tryagain">Try another word</button>
+        </div>
+        <div id="lost" class="hide">
+          <h1>You lost - the word was <span id="secretword"></span> - but you were close ...</h1>
+          <button class="tryagain">Try again?</button>
+        </div>
       </div>
-      <div id="alphabetbuttons">
-        
-      </div>
-    </div>
 
+      <div id="word"></div>
+      <div id="alphabetbuttons"></div>
+    </div>
 
     <script src="script.js"></script>
   </body>

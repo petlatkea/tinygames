@@ -43,11 +43,12 @@ const wordlist = [
 ];
 
 let secretWord = "";
-let correctLetters = 0;
 let wrongLetters = 0;
+let gameStopped = true;
 
 function start() {
   createAlphabetButtons();
+  document.querySelectorAll(".tryagain").forEach(button => button.addEventListener("click", startNewGame));
   startNewGame();
 }
 
@@ -60,15 +61,16 @@ function createAlphabetButtons() {
     const button = document.createElement("button");
     button.textContent = letter;
     button.dataset.letter = letter.toLowerCase();
-    button.addEventListener("click", selectLetter);
+    button.addEventListener("click", clickOnLetter);
     buttons.appendChild(button);
   }
 }
 
 function startNewGame() {
-  correctLetters = 0;
-  wrongLetters = 0;
+  gameStopped = false;
+  hideEndings();
   resetAlphabetButtons();
+  resetLimbs();
   setSecretWord();
 }
 
@@ -81,17 +83,17 @@ function resetAlphabetButtons() {
 
 function setSecretWord() {
   secretWord = wordlist[Math.floor(Math.random() * wordlist.length)];
-  setUpLetters(secretWord);
+  setupLetterBoxes(secretWord);
 }
 
-function setUpLetters(word) {
+function setupLetterBoxes(secretword) {
   const wordcontainer = document.querySelector("#word");
   wordcontainer.innerHTML = "";
 
-  for (const letter of Array.from(word)) {
+  for (const letter of Array.from(secretword)) {
     const letterbox = document.createElement("div");
     letterbox.classList.add("letter");
-    letterbox.textContent = " "; // TODO: Remove letter
+    letterbox.textContent = " ";
     wordcontainer.append(letterbox);
   }
 }
@@ -106,44 +108,78 @@ function showLetterInWord(letter) {
   }
 }
 
-function selectLetter(event) {
-  const button = event.target;
-  const letter = button.dataset.letter;
-  console.log("Selected letter: " + letter);
-
-  // mark selected letter as used
-  button.classList.add("used");
-  button.disabled = true;
-
-  // Check if letter is correct or not
-  const correct = checkLetter(letter);
-
-  if (correct) {
-    button.classList.add("correct");
-  } else {
-    button.classList.add("incorrect");
-  }
-
-  // TODO: Check if won or lost!
+function allLettersGuessed() {
+  return !Array.from(document.querySelectorAll("#word .letter")).some(letterbox => letterbox.textContent === " ");
 }
 
-function checkLetter(letter) {
+function clickOnLetter(event) {
+  if (!gameStopped) {
+    const button = event.target;
+    const letter = button.dataset.letter;
+    console.log("Selected letter: " + letter);
+
+    // mark selected letter as used
+    button.classList.add("used");
+    button.disabled = true;
+
+    // Check if letter is correct or not
+    const correct = selectLetter(letter);
+
+    if (correct) {
+      button.classList.add("correct");
+    } else {
+      button.classList.add("incorrect");
+    }
+  }
+}
+
+function selectLetter(letter) {
   if (secretWord.includes(letter)) {
     showLetterInWord(letter);
-    // Get point
-    correctLetters++
+    if (allLettersGuessed()) {
+      gameWon();
+    }
     return true;
   } else {
-    // Loose limb and score ...
-    looseLimb(wrongLetters);
-    wrongLetters++;
+    // letter is not correct - loose a limb
+    looseLimb();
+    if (allLimbsLost()) {
+      gameLost();
+    }
     return false;
   }
 }
 
-function looseLimb(points) {
+function looseLimb() {
   const limbs = ["head", "body", "armL", "armR", "legL", "legR"];
-  const limb = document.querySelector(`svg #${limbs[points]}`);
+  const limb = document.querySelector(`svg #${limbs[wrongLetters++]}`);
 
   limb.classList.remove("hide");
+}
+
+function allLimbsLost() {
+  return wrongLetters === 6;
+}
+
+function resetLimbs() {
+  const limbs = ["head", "body", "armL", "armR", "legL", "legR"];
+  limbs.forEach(limbid => document.querySelector(`svg #${limbid}`).classList.add("hide"));
+  wrongLetters = 0;
+}
+
+function gameWon() {
+  document.querySelector("#won").classList.remove("hide");
+  document.querySelector("#wrong").textContent = wrongLetters;
+  gameStopped = true;
+}
+
+function gameLost() {
+  document.querySelector("#lost").classList.remove("hide");
+  document.querySelector("#secretword").textContent = secretWord;
+  gameStopped = true;
+}
+
+function hideEndings() {
+  document.querySelector("#won").classList.add("hide");
+  document.querySelector("#lost").classList.add("hide");
 }

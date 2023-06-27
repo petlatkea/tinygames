@@ -14,8 +14,11 @@ line, circle {
 }
 
 #game {
-  display: flex;
-  gap: 4em
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  grid-template-rows: auto 5em;
+  align-items: center;
+  gap: 1em
 }
 
 #word {
@@ -27,6 +30,7 @@ line, circle {
 #word .letter {
   font-size: 2em;
   min-width: .8em;
+  min-height: 1.2em;
   text-align: center;
   text-transform: uppercase;
   border-bottom: 1px solid #aaa;
@@ -55,4 +59,23 @@ line, circle {
 .correct {
   background-color: rgba(140, 244, 140, 0.6);
   color: #ccc;
+}
+
+#status {
+  display: grid;
+}
+
+#won, #lost {
+  grid-area: 1 / 1 ;
+}
+
+button.tryagain {
+  font-size: 120%;
+  padding: 1em;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { scale: 1;}
+  to { scale: 1.1;}
 }
