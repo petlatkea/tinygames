@@ -26,6 +26,8 @@ line, circle {
 
 #word .letter {
   font-size: 2em;
+  min-width: .8em;
+  text-align: center;
   text-transform: uppercase;
   border-bottom: 1px solid #aaa;
 }
