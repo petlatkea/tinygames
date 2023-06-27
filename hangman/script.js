@@ -43,6 +43,8 @@ const wordlist = [
 ];
 
 let secretWord = "";
+let correctLetters = 0;
+let wrongLetters = 0;
 
 function start() {
   createAlphabetButtons();
@@ -64,6 +66,8 @@ function createAlphabetButtons() {
 }
 
 function startNewGame() {
+  correctLetters = 0;
+  wrongLetters = 0;
   resetAlphabetButtons();
   setSecretWord();
 }
@@ -126,10 +130,20 @@ function selectLetter(event) {
 function checkLetter(letter) {
   if (secretWord.includes(letter)) {
     showLetterInWord(letter);
-    // TODO: Get point
+    // Get point
+    correctLetters++
     return true;
   } else {
-    // TODO: Loose limb
+    // Loose limb and score ...
+    looseLimb(wrongLetters);
+    wrongLetters++;
     return false;
   }
+}
+
+function looseLimb(points) {
+  const limbs = ["head", "body", "armL", "armR", "legL", "legR"];
+  const limb = document.querySelector(`svg #${limbs[points]}`);
+
+  limb.classList.remove("hide");
 }
