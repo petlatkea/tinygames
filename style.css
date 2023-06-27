@@ -1,0 +1,23 @@
+body {
+  background-color: #444;
+  color: #eee;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 97vh;
+}
+
+a {
+  color: yellow;
+}
+
+a:visited {
+  color: orange;
+}
+
+footer {
+  margin-top: 1em;
+  color: #aaa;
+  font-style: italic;
+}
